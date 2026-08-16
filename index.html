@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mai Hori – Napi horoszkóp</title>
+  <meta name="description" content="Napi horoszkóp mind a 12 csillagjegyre. Ingyenes, friss, minden reggel megújul.">
+  <meta property="og:title" content="Mai Hori – Napi horoszkóp">
+  <meta property="og:description" content="Napi horoszkóp mind a 12 csillagjegyre. Ingyenes, friss, minden reggel megújul.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maihori.hu/">
+  <meta property="og:image" content="https://maihori.hu/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mai Hori – Napi horoszkóp">
+  <meta name="twitter:description" content="Napi horoszkóp mind a 12 csillagjegyre.">
+  <meta name="twitter:image" content="https://maihori.hu/og-image.png">
+  <link rel="canonical" href="https://maihori.hu/">
+  <!-- Google Search Console: replace content with your verification code from search.google.com/search-console -->
+  <meta name="google-site-verification" content="PASTE_GSC_CODE_HERE">
+  <!-- Google Analytics 4: replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #09071a;
+      --surface:  #120f28;
+      --surface2: #1a1640;
+      --accent:   #8b5cf6;
+      --accent2:  #a78bfa;
+      --text:     #e2dff5;
+      --muted:    #7c78a0;
+      --border:   #2a2550;
+      --glow:     rgba(139, 92, 246, 0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Stars background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 65% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 50%, rgba(255,255,255,0.3) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > * { position: relative; z-index: 1; }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #c4b5fd, #8b5cf6, #6d28d9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .date-display {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--accent2);
+      font-weight: 400;
+    }
+
+    /* ── Main layout ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    /* ── Sign grid ── */
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-weight: 500;
+    }
+
+    .signs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .sign-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 0.75rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      user-select: none;
+    }
+
+    .sign-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 16px var(--glow);
+      transform: translateY(-2px);
+    }
+
+    .sign-card.active {
+      border-color: var(--accent);
+      background: var(--surface2);
+      box-shadow: 0 0 24px var(--glow);
+    }
+
+    .sign-symbol {
+      font-size: 1.8rem;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .sign-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .sign-dates {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .sign-element {
+      display: inline-block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    .el-tűz  { background: rgba(239,68,68,0.15); color: #f87171; }
+    .el-föld { background: rgba(34,197,94,0.15);  color: #86efac; }
+    .el-levegő { background: rgba(250,204,21,0.15); color: #fde68a; }
+    .el-víz  { background: rgba(59,130,246,0.15); color: #93c5fd; }
+
+    /* ── Reading area ── */
+    .reading-area {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s, transform 0.35s;
+      min-height: 120px;
+    }
+
+    .reading-area.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reading-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .reading-symbol {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .reading-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .reading-subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .reading-text {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--text);
+    }
+
+    .reading-text p + p { margin-top: 1.2rem; }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem;
+      font-size: 1rem;
+    }
+
+    .empty-icon {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 0.75rem;
+      opacity: 0.5;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* ── Loading state ── */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
+    }
+
+    /* ── Error banner ── */
+    .error-banner {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      color: #f87171;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .signs-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+      .sign-card  { padding: 0.9rem 0.5rem; }
+      .sign-symbol { font-size: 1.5rem; }
+      .sign-name   { font-size: 0.85rem; }
+      .reading-area { padding: 1.5rem 1.25rem; }
+    }
+
+    @media (max-width: 420px) {
+      .signs-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Mai Hori ✦</div>
+  <div class="tagline">Napi horoszkóp</div>
+  <div class="date-display" id="date-display"></div>
+</header>
+
+<main>
+  <div id="error-container"></div>
+
+  <div class="section-label">Válaszd ki a csillagjegyed</div>
+  <div class="signs-grid" id="signs-grid">
+    <div class="loading">⟳ Betöltés...</div>
+  </div>
+
+  <div class="reading-area" id="reading-area">
+    <div class="empty-state">
+      <span class="empty-icon">✦</span>
+      Kattints egy csillagjegyre a mai horoszkópod megtekintéséhez
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> Mai Hori &mdash; minden reggel friss horoszkóp</p>
+</footer>
+
+<script>
+  const SIGNS = [
+    { id: 'kos',      name: 'Kos',      symbol: '♈', dates: 'márc. 21. – ápr. 19.',  element: 'tűz'     },
+    { id: 'bika',     name: 'Bika',     symbol: '♉', dates: 'ápr. 20. – máj. 20.',   element: 'föld'    },
+    { id: 'ikrek',    name: 'Ikrek',    symbol: '♊', dates: 'máj. 21. – jún. 20.',   element: 'levegő'  },
+    { id: 'rak',      name: 'Rák',      symbol: '♋', dates: 'jún. 21. – júl. 22.',   element: 'víz'     },
+    { id: 'oroszlan', name: 'Oroszlán', symbol: '♌', dates: 'júl. 23. – aug. 22.',   element: 'tűz'     },
+    { id: 'szuz',     name: 'Szűz',     symbol: '♍', dates: 'aug. 23. – szept. 22.', element: 'föld'    },
+    { id: 'merleg',   name: 'Mérleg',   symbol: '♎', dates: 'szept. 23. – okt. 22.', element: 'levegő'  },
+    { id: 'skorpio',  name: 'Skorpió',  symbol: '♏', dates: 'okt. 23. – nov. 21.',   element: 'víz'     },
+    { id: 'nyilas',   name: 'Nyilas',   symbol: '♐', dates: 'nov. 22. – dec. 21.',   element: 'tűz'     },
+    { id: 'bak',      name: 'Bak',      symbol: '♑', dates: 'dec. 22. – jan. 19.',   element: 'föld'    },
+    { id: 'vizonto',  name: 'Vízöntő',  symbol: '♒', dates: 'jan. 20. – febr. 18.',  element: 'levegő'  },
+    { id: 'halak',    name: 'Halak',    symbol: '♓', dates: 'febr. 19. – márc. 20.', element: 'víz'     },
+  ];
+
+  const MONTHS = ['január','február','március','április','május','június',
+                  'július','augusztus','szeptember','október','november','december'];
+
+  let todayData = null;
+  let activeSign = localStorage.getItem('maihori-sign') || null;
+
+  function formatDate(d) {
+    return `${d.getFullYear()}. ${MONTHS[d.getMonth()]} ${d.getDate()}.`;
+  }
+
+  function showError(msg) {
+    document.getElementById('error-container').innerHTML =
+      `<div class="error-banner">${msg}</div>`;
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('signs-grid');
+    grid.innerHTML = SIGNS.map(s => `
+      <div class="sign-card${activeSign === s.id ? ' active' : ''}"
+           data-id="${s.id}" role="button" tabindex="0"
+           aria-label="${s.name} horoszkóp">
+        <div class="sign-symbol">${s.symbol}</div>
+        <div class="sign-name">${s.name}</div>
+        <div class="sign-dates">${s.dates}</div>
+        <div class="sign-element el-${s.element}">${s.element}</div>
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('.sign-card').forEach(card => {
+      card.addEventListener('click', () => selectSign(card.dataset.id));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') selectSign(card.dataset.id);
+      });
+    });
+  }
+
+  function selectSign(id) {
+    activeSign = id;
+    localStorage.setItem('maihori-sign', id);
+    renderGrid();
+    showReading(id);
+  }
+
+  function showReading(id) {
+    const area   = document.getElementById('reading-area');
+    const sign   = SIGNS.find(s => s.id === id);
+    const text   = todayData ? todayData[id] : null;
+
+    area.classList.remove('visible');
+
+    setTimeout(() => {
+      if (!text) {
+        area.innerHTML = `<div class="empty-state">
+          <span class="empty-icon">✦</span>
+          A mai horoszkóp még nem érhető el. Nézz vissza reggel!
+        </div>`;
+      } else {
+        const paragraphs = text.split(/\n+/).filter(p => p.trim())
+          .map(p => `<p>${p}</p>`).join('');
+        area.innerHTML = `
+          <div class="reading-header">
+            <div class="reading-symbol">${sign.symbol}</div>
+            <div>
+              <div class="reading-title">${sign.name}</div>
+              <div class="reading-subtitle">${sign.dates} &mdash; ${sign.element}</div>
+            </div>
+          </div>
+          <div class="reading-text">${paragraphs}</div>
+        `;
+      }
+      area.classList.add('visible');
+    }, 150);
+  }
+
+  async function init() {
+    const today = new Date();
+    document.getElementById('date-display').textContent = formatDate(today);
+    document.getElementById('year').textContent = today.getFullYear();
+
+    const todayStr = today.toISOString().split('T')[0];
+
+    try {
+      const res  = await fetch('horoscopes.json?v=' + todayStr);
+      const data = await res.json();
+      const entry = data.find(d => d.date === todayStr) || data[0];
+      if (entry) todayData = entry;
+    } catch (e) {
+      showError('Nem sikerült betölteni a horoszkópot. Kérjük, próbáld újra később.');
+    }
+
+    renderGrid();
+
+    if (activeSign) {
+      showReading(activeSign);
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>
