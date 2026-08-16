@@ -424,8 +424,14 @@
     try {
       const res  = await fetch('horoscopes.json?v=' + todayStr);
       const data = await res.json();
-      const entry = data.find(d => d.date === todayStr) || data[0];
-      if (entry) todayData = entry;
+      const entry = data.find(d => d.date === todayStr) || data[data.length - 1];
+      if (entry) {
+        todayData = entry;
+        const entryDate = new Date(entry.date + 'T12:00:00');
+        const isToday = entry.date === todayStr;
+        document.getElementById('date-display').textContent =
+          (isToday ? 'Mai horoszkóp – ' : 'Legutóbbi horoszkóp – ') + formatDate(entryDate);
+      }
     } catch (e) {
       showError('Nem sikerült betölteni a horoszkópot. Kérjük, próbáld újra később.');
     }
