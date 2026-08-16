@@ -282,6 +282,21 @@
       font-size: 0.9rem;
     }
 
+    .gender-toggle {
+      display: flex; gap: 0.5rem; margin-bottom: 1.75rem;
+    }
+    .gender-btn {
+      padding: 0.5rem 1.5rem; border-radius: 30px; font-size: 0.9rem;
+      font-family: inherit; cursor: pointer; font-weight: 500;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: transparent; color: var(--text2);
+      transition: all 0.2s;
+    }
+    .gender-btn.active {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+    .gender-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
     .sign-meta {
       display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.75rem 0 1.25rem;
     }
@@ -325,6 +340,11 @@
 <main>
   <div id="error-container"></div>
 
+  <div class="gender-toggle">
+    <button class="gender-btn active" id="btn-ferfi" onclick="setGender('ferfi')">♂ Férfi</button>
+    <button class="gender-btn" id="btn-no" onclick="setGender('no')">♀ Nő</button>
+  </div>
+
   <div class="section-label">Válaszd ki a csillagjegyed</div>
   <div class="signs-grid" id="signs-grid">
     <div class="loading">⟳ Betöltés...</div>
@@ -362,7 +382,16 @@
                   'július','augusztus','szeptember','október','november','december'];
 
   let todayData = null;
-  let activeSign = localStorage.getItem('maihori-sign') || null;
+  let activeSign   = localStorage.getItem('maihori-sign')   || null;
+  let activeGender = localStorage.getItem('maihori-gender') || 'ferfi';
+
+  function setGender(g) {
+    activeGender = g;
+    localStorage.setItem('maihori-gender', g);
+    document.getElementById('btn-ferfi').classList.toggle('active', g === 'ferfi');
+    document.getElementById('btn-no').classList.toggle('active', g === 'no');
+    if (activeSign) showReading(activeSign);
+  }
 
   function formatDate(d) {
     return `${d.getFullYear()}. ${MONTHS[d.getMonth()]} ${d.getDate()}.`;
@@ -404,7 +433,8 @@
   function showReading(id) {
     const area   = document.getElementById('reading-area');
     const sign   = SIGNS.find(s => s.id === id);
-    const text   = todayData ? todayData[id] : null;
+    const genderData = todayData ? (todayData[activeGender] || todayData) : null;
+    const text   = genderData ? genderData[id] : null;
 
     area.classList.remove('visible');
 
@@ -437,6 +467,7 @@
   }
 
   async function init() {
+    setGender(activeGender);
     const today = new Date();
     document.getElementById('date-display').textContent = formatDate(today);
     document.getElementById('year').textContent = today.getFullYear();

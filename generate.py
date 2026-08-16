@@ -152,14 +152,23 @@ def call_gemini(prompt: str) -> str:
         "systemInstruction": {"parts": [{"text": SYSTEM_PROMPT}]},
         "generationConfig": {"temperature": 0.85, "maxOutputTokens": 4096},
     }
-    r = requests.post(url, json=payload, timeout=60)
+    for attempt in range(5):
+        r = requests.post(url, json=payload, timeout=60)
+        if r.status_code == 429:
+            wait = 30 * (2 ** attempt)
+            log.warning("429 rate limit, waiting %ds (attempt %d/5)", wait, attempt + 1)
+            time.sleep(wait)
+            continue
+        r.raise_for_status()
+        return r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
     r.raise_for_status()
-    return r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
 
 
-def generate_all_signs(today: str) -> dict:
+def generate_all_signs(today: str, gender: str) -> dict:
+    gender_hu = "férfiak" if gender == "ferfi" else "nők"
     sign_list = "\n".join(f'  "{s[0]}": "<{s[1]} szöveg>"' for s in SIGNS)
-    prompt = f"""Ma {today} van. Írj napi horoszkópot mind a 12 jegyre.
+    prompt = f"""Ma {today} van. Írj napi horoszkópot mind a 12 jegyre, {gender_hu} számára.
+A szöveg hangvétele, élethelyzetek és példák illeszkedjenek a {gender_hu} mindennapjaihoz.
 
 Válaszolj CSAK érvényes JSON-ban, más szöveg nélkül:
 {{
@@ -278,7 +287,8 @@ def main() -> None:
     if any(d["date"] == today for d in data):
         log.info("Már elkészült a mai horoszkóp — sign pages újraírása.")
         today_entry = next(d for d in data if d["date"] == today)
-        sign_pages = write_sign_pages(today, today_entry)
+        signs_for_pages = today_entry.get("ferfi") or today_entry
+        sign_pages = write_sign_pages(today, signs_for_pages)
         write_sitemap(today)
         push_to_github({
             "sitemap.xml": (BASE_DIR / "sitemap.xml").read_bytes(),
@@ -287,13 +297,14 @@ def main() -> None:
         return
 
     log.info("Horoszkóp generálása: %s", today)
-    signs = generate_all_signs(today)
+    signs_ferfi = generate_all_signs(today, "ferfi")
+    signs_no    = generate_all_signs(today, "no")
 
-    data.insert(0, {"date": today, **signs})
+    data.insert(0, {"date": today, "ferfi": signs_ferfi, "no": signs_no})
     data = data[:KEEP_DAYS]
     save_data(data)
 
-    sign_pages = write_sign_pages(today, signs)
+    sign_pages = write_sign_pages(today, signs_ferfi)
     write_sitemap(today)
 
     push_to_github({
