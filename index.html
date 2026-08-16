@@ -282,6 +282,24 @@
       font-size: 0.9rem;
     }
 
+    .sign-meta {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.75rem 0 1.25rem;
+    }
+    .meta-pill {
+      font-size: 0.75rem; padding: 3px 10px; border-radius: 20px;
+      background: rgba(255,255,255,0.06); color: var(--text2);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .sign-description {
+      font-size: 0.9rem; color: var(--text2); line-height: 1.7;
+      margin-bottom: 1.5rem; font-style: italic;
+      padding-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .reading-label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--accent2); font-weight: 500; margin-bottom: 0.75rem;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 700px) {
       .signs-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
@@ -326,18 +344,18 @@
 
 <script>
   const SIGNS = [
-    { id: 'kos',      name: 'Kos',      symbol: '♈', dates: 'márc. 21. – ápr. 19.',  element: 'tűz'     },
-    { id: 'bika',     name: 'Bika',     symbol: '♉', dates: 'ápr. 20. – máj. 20.',   element: 'föld'    },
-    { id: 'ikrek',    name: 'Ikrek',    symbol: '♊', dates: 'máj. 21. – jún. 20.',   element: 'levegő'  },
-    { id: 'rak',      name: 'Rák',      symbol: '♋', dates: 'jún. 21. – júl. 22.',   element: 'víz'     },
-    { id: 'oroszlan', name: 'Oroszlán', symbol: '♌', dates: 'júl. 23. – aug. 22.',   element: 'tűz'     },
-    { id: 'szuz',     name: 'Szűz',     symbol: '♍', dates: 'aug. 23. – szept. 22.', element: 'föld'    },
-    { id: 'merleg',   name: 'Mérleg',   symbol: '♎', dates: 'szept. 23. – okt. 22.', element: 'levegő'  },
-    { id: 'skorpio',  name: 'Skorpió',  symbol: '♏', dates: 'okt. 23. – nov. 21.',   element: 'víz'     },
-    { id: 'nyilas',   name: 'Nyilas',   symbol: '♐', dates: 'nov. 22. – dec. 21.',   element: 'tűz'     },
-    { id: 'bak',      name: 'Bak',      symbol: '♑', dates: 'dec. 22. – jan. 19.',   element: 'föld'    },
-    { id: 'vizonto',  name: 'Vízöntő',  symbol: '♒', dates: 'jan. 20. – febr. 18.',  element: 'levegő'  },
-    { id: 'halak',    name: 'Halak',    symbol: '♓', dates: 'febr. 19. – márc. 20.', element: 'víz'     },
+    { id: 'kos',      name: 'Kos',      symbol: '♈', dates: 'márc. 21. – ápr. 19.',  element: 'tűz',     planet: 'Mars',      traits: ['energikus','bátor','impulzív','versenyszellemű'],   description: 'Bátor, elszánt és tele energiával. A Kos az állatöv első jegye – természetes vezető, aki szeret elsőként tenni meg mindent. Lelkesedése és határozott egyénisége mindenkit magával ragad.' },
+    { id: 'bika',     name: 'Bika',     symbol: '♉', dates: 'ápr. 20. – máj. 20.',   element: 'föld',    planet: 'Vénusz',    traits: ['kitartó','megbízható','érzéki','türelmes'],          description: 'Megbízható, türelmes és a szépség igazi szerelmese. A Bika értékeli az élet stabil, kényelmes oldalát, és páratlan kitartással ragaszkodik ahhoz, amibe belefog. Hűsége minden körülmények között megingathatatlan.' },
+    { id: 'ikrek',    name: 'Ikrek',    symbol: '♊', dates: 'máj. 21. – jún. 20.',   element: 'levegő',  planet: 'Merkúr',    traits: ['szellemes','sokoldalú','kommunikatív','kíváncsi'],   description: 'Kíváncsi, szellemes és rendkívül sokoldalú. Az Ikrek gondolkodása villámgyors, kommunikációja brilliáns. Szórakoztató társak, akik mindig friss szemszöget és új ötleteket hoznak minden helyzetbe.' },
+    { id: 'rak',      name: 'Rák',      symbol: '♋', dates: 'jún. 21. – júl. 22.',   element: 'víz',     planet: 'Hold',      traits: ['gondoskodó','intuitív','érzelmes','védelmező'],      description: 'Érzékeny, intuitív és mélyen empatikus. A Rák a család és az otthon védelmezője, aki mélyen kötődik szeretteihez. Gondoskodó természete mindenkit melegséggel és biztonságérzettel tölt el.' },
+    { id: 'oroszlan', name: 'Oroszlán', symbol: '♌', dates: 'júl. 23. – aug. 22.',   element: 'tűz',     planet: 'Nap',       traits: ['karizmatikus','nagylelkű','büszke','kreatív'],       description: 'Karizmatikus, nagylelkű és természetes módon a figyelem középpontja. Az Oroszlán ragyogni született – büszke és határozott, de szíve arany, és barátaiért képes mindent feláldozni.' },
+    { id: 'szuz',     name: 'Szűz',     symbol: '♍', dates: 'aug. 23. – szept. 22.', element: 'föld',    planet: 'Merkúr',    traits: ['precíz','analitikus','segítőkész','perfekcionista'], description: 'Analitikus, precíz és rendkívül megbízható. A Szűz figyel a részletekre, és mindig a tökéletességre törekszik. Munkájának minősége kiemelkedő, és segítőkészsége minden helyzetben megnyilvánul.' },
+    { id: 'merleg',   name: 'Mérleg',   symbol: '♎', dates: 'szept. 23. – okt. 22.', element: 'levegő',  planet: 'Vénusz',    traits: ['harmonikus','igazságos','szociális','diplomatikus'], description: 'Harmonikus, igazságos és esztétikus érzékkel megáldott. A Mérleg a kapcsolatok mestere, aki mindent egyensúlyban szeretne tartani. Diplomáciai érzéke és igazságszeretete páratlan.' },
+    { id: 'skorpio',  name: 'Skorpió',  symbol: '♏', dates: 'okt. 23. – nov. 21.',   element: 'víz',     planet: 'Plútó',     traits: ['intenzív','szenvedélyes','elszánt','mélységes'],     description: 'Intenzív, elszánt és mélyen érzékeny. A Skorpió nem ismer félmegoldásokat – mindent teljesen átél. Titokzatos belső ereje és végtelen szenvedélye mindenkit lenyűgöz.' },
+    { id: 'nyilas',   name: 'Nyilas',   symbol: '♐', dates: 'nov. 22. – dec. 21.',   element: 'tűz',     planet: 'Jupiter',   traits: ['optimista','kalandvágyó','őszinte','filozofikus'],   description: 'Optimista, kalandvágyó és filozofikus beállítottságú. A Nyilas szabad lélek, aki szeret felfedezni – fizikailag és szellemileg egyaránt. Nyíltsága és humora mindenkit megfertőz.' },
+    { id: 'bak',      name: 'Bak',      symbol: '♑', dates: 'dec. 22. – jan. 19.',   element: 'föld',    planet: 'Szaturnusz', traits: ['ambiciózus','fegyelmezett','kitartó','felelősségteljes'], description: 'Ambiciózus, fegyelmezett és rendkívül kitartó. A Bak tudja, mit akar, és nem rest keményen megdolgozni érte. Komolyan veszi kötelességeit, de mélyen belül meleg szív dobog benne.' },
+    { id: 'vizonto',  name: 'Vízöntő',  symbol: '♒', dates: 'jan. 20. – febr. 18.',  element: 'levegő',  planet: 'Uránusz',   traits: ['eredeti','humanista','független','innovatív'],       description: 'Eredeti, humanista és előremutató gondolkodású. A Vízöntő a jövőbe lát, és szeret a megszokottól eltérő utakat járni. Barátai körében ő a legkülönlegesebb – saját szabályait alkotja.' },
+    { id: 'halak',    name: 'Halak',    symbol: '♓', dates: 'febr. 19. – márc. 20.', element: 'víz',     planet: 'Neptunusz', traits: ['empatikus','kreatív','intuitív','álmodozó'],        description: 'Álmodozó, intuitív és rendkívül empatikus. A Halak a legmisztikusabb jegy – könnyen átérzik mások érzelmeit, és mélyen kreatívak. Képzeletük határtalan, és a világ szépségét mindenkinél mélyebben érzékelik.' },
   ];
 
   const MONTHS = ['január','február','március','április','május','június',
@@ -399,14 +417,18 @@
       } else {
         const paragraphs = text.split(/\n+/).filter(p => p.trim())
           .map(p => `<p>${p}</p>`).join('');
+        const traits = (sign.traits || []).map(t => `<span class="meta-pill">${t}</span>`).join('');
         area.innerHTML = `
           <div class="reading-header">
             <div class="reading-symbol">${sign.symbol}</div>
             <div>
               <div class="reading-title">${sign.name}</div>
-              <div class="reading-subtitle">${sign.dates} &mdash; ${sign.element}</div>
+              <div class="reading-subtitle">${sign.dates} &mdash; ${sign.element} &mdash; ☿ ${sign.planet || ''}</div>
             </div>
           </div>
+          ${sign.description ? `<div class="sign-description">${sign.description}</div>` : ''}
+          ${traits ? `<div class="sign-meta">${traits}</div>` : ''}
+          <div class="reading-label">Mai horoszkóp</div>
           <div class="reading-text">${paragraphs}</div>
         `;
       }
